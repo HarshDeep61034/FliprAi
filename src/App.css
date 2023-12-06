@@ -38,6 +38,12 @@
   background-color: #ffff;
   border-radius: 5px;
   cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-sr:hover {
+  background-color: #8053ff;
+  color: white;
 }
 
 .stroke {
