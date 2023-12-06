@@ -1,0 +1,66 @@
+* {
+  padding: 0;
+  margin: 0;
+  overflow-x: hidden;
+}
+
+.main {
+  width: 100vw;
+  height: 85vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.main > div {
+  margin: 20px;
+}
+.main-logo {
+  font-size: 45px;
+  font-weight: 700;
+}
+
+.main-title {
+  font-size: 20px;
+  font-weight: 200;
+  color: #23155b;
+}
+
+.main-btns > button {
+  margin: 10px;
+  padding: 7px 20px;
+  font-size: 20px;
+}
+
+.btn-sr {
+  border: 2px solid #8053ff;
+  color: #8053ff;
+  background-color: #ffff;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.stroke {
+  color: #f2f2f2;
+  -webkit-text-stroke-width: 2px;
+  -webkit-text-stroke-color: #23155b;
+  text-shadow: -1px 5px #23155b;
+}
+
+@media screen and (min-width: 1000px) {
+  .main {
+    justify-content: center;
+  }
+
+  .main-logo {
+    font-size: 80px;
+  }
+
+  .main-title {
+    font-size: 30px;
+  }
+
+  .main-btns > button {
+    font-size: 30px;
+  }
+}
