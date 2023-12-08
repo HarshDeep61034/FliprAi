@@ -1,6 +1,7 @@
 import Navbar from "./components/Navbar";
 import Flip from "./components/Flip";
 import "./App.css";
+import Footer from "./components/Footer";
 
 function App() {
   const scrollToSection = () => {
@@ -25,6 +26,7 @@ function App() {
         </div>
       </div>
       <Flip id="sectionId" />
+      <Footer />
     </>
   );
 }
