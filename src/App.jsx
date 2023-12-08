@@ -1,7 +1,12 @@
 import Navbar from "./components/Navbar";
+import Flip from "./components/Flip";
 import "./App.css";
 
 function App() {
+  const scrollToSection = () => {
+    const section = document.getElementById("sectionId");
+    section.scrollIntoView({ behavior: "smooth" });
+  };
   return (
     <>
       <Navbar />
@@ -14,9 +19,12 @@ function App() {
         </div>
         <div className="main-btns">
           <button className="btn-pr">DETECT</button>
-          <button className="btn-sr">Humanize_iT</button>
+          <button onClick={scrollToSection} className="btn-sr">
+            Humanize_iT
+          </button>
         </div>
       </div>
+      <Flip id="sectionId" />
     </>
   );
 }
