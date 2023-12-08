@@ -5,6 +5,7 @@ const Flip = () => {
   const [messages, setMessages] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const handleSendMessage = async () => {
+    if (inputValue === "") return;
     // Send the message to your backend or external service (e.g., ChatGPT)
     // const response = await sendMessageToChatGPT(inputValue);
 
