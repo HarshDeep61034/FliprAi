@@ -1,6 +1,5 @@
 import Navbar from "./components/Navbar";
 import "./App.css";
-import { Link } from "react-router-dom";
 
 function App() {
   return (
@@ -14,12 +13,8 @@ function App() {
           </p>
         </div>
         <div className="main-btns">
-          <Link to={"/check"}>
-            <button className="btn-pr">DETECT</button>
-          </Link>
-          <Link to={"/flip"}>
-            <button className="btn-sr">Humanize_iT</button>
-          </Link>
+          <button className="btn-pr">DETECT</button>
+          <button className="btn-sr">Humanize_iT</button>
         </div>
       </div>
     </>
