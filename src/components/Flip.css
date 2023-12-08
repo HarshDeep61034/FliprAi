@@ -1,10 +1,13 @@
 .flip {
   width: 80%;
   margin: auto;
-  height: 70vh;
+  height: 80vh;
   background-color: #8053ff;
   border: 4px solid #8053ff;
   border-radius: 5px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 h1 {
@@ -16,8 +19,25 @@ h1 {
 
 .chat-div {
   width: 80%;
-  height: 50vh;
+  min-height: 70%;
   border-radius: 5px;
   background-color: #ffff;
   margin: auto;
+}
+
+.input-div {
+  display: flex;
+}
+
+#input-chat {
+  width: 80%;
+  margin: 20px;
+  border-radius: 5px;
+}
+
+.send-icon {
+  color: #ffff;
+  position: relative;
+  top: 22px;
+  right: 10px;
 }

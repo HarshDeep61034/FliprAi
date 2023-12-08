@@ -9,7 +9,7 @@ function App() {
   };
   return (
     <>
-      <Navbar />
+      <Navbar handleScroll={scrollToSection} />
       <div className="main">
         <div className="main-logo stroke">FliprAi</div>
         <div className="main-title">
