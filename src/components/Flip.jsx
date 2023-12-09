@@ -1,6 +1,9 @@
 import { useState } from "react";
 import "./Flip.css";
 import { IoSend } from "react-icons/io5";
+import dotenv from "dotenv";
+dotenv.config();
+
 const Flip = () => {
   const [messages, setMessages] = useState([]);
   const [inputValue, setInputValue] = useState("");
@@ -11,16 +14,16 @@ const Flip = () => {
       ...prevMessages,
       { text: inputValue, type: "user" },
     ]);
-
+    const URL = process.env.FLIPRAI_API_URL;
     console.log(messages);
     try {
       // Send the user message to the backend
-      const response = await fetch("http://localhost:6969/api", {
+      const response = await fetch(URL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ inputValue }),
+        body: JSON.stringify({ message: inputValue }),
       });
 
       if (!response.ok) {
@@ -29,11 +32,11 @@ const Flip = () => {
 
       // Parse the response JSON
       const data = await response.json();
-
+      console.log(data);
       // Update the state with the bot's response
       setMessages((prevMessages) => [
         ...prevMessages,
-        { text: data.msg, type: "bot" },
+        { text: data.response, type: "bot" },
       ]);
     } catch (error) {
       console.error("Error:", error.message);
