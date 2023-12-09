@@ -2,8 +2,14 @@ import Navbar from "./components/Navbar";
 import Flip from "./components/Flip";
 import "./App.css";
 import Footer from "./components/Footer";
+import Faq from "./components/Faq";
+import data from "../faq.json";
 
 function App() {
+  const [faq, setFaq] = [false, false, false, false, false, false];
+  const elements = data.map((item, index) => {
+    return <Faq question={item.question} id={index} answer={item.answer} />;
+  });
   const scrollToSection = () => {
     const section = document.getElementById("sectionId");
     section.scrollIntoView({ behavior: "smooth" });
@@ -25,7 +31,9 @@ function App() {
           </button>
         </div>
       </div>
-      <Flip id="sectionId" />
+      <Flip />
+      <h1>Frequently Asked Questions</h1>
+      <div className="faq-section"> {elements}</div>
       <Footer />
     </>
   );

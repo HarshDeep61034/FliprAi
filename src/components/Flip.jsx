@@ -6,12 +6,38 @@ const Flip = () => {
   const [inputValue, setInputValue] = useState("");
   const handleSendMessage = async () => {
     if (inputValue === "") return;
-    // Send the message to your backend or external service (e.g., ChatGPT)
-    // const response = await sendMessageToChatGPT(inputValue);
+    // Update the state with the user's message
+    setMessages((prevMessages) => [
+      ...prevMessages,
+      { text: inputValue, type: "user" },
+    ]);
 
-    // Update the state with the received message
-    setMessages([...messages, { text: inputValue, type: "user" }]);
-    // setMessages([...messages, { text: response, type: "bot" }]);
+    console.log(messages);
+    try {
+      // Send the user message to the backend
+      const response = await fetch("http://localhost:6969/api", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ inputValue }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      // Parse the response JSON
+      const data = await response.json();
+
+      // Update the state with the bot's response
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        { text: data.msg, type: "bot" },
+      ]);
+    } catch (error) {
+      console.error("Error:", error.message);
+    }
 
     // Clear the input field
     setInputValue("");

@@ -1,0 +1,42 @@
+.faq-div {
+  width: 65vw;
+  background-color: #8053ff;
+  color: white;
+  margin: 10px auto;
+  padding: 10px;
+  font-size: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  font-size: 15px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.4s;
+}
+
+.ans {
+  background-color: #a78bfa;
+  padding: 4px;
+  margin: 10px 0px;
+  border-radius: 5px;
+}
+
+.ans-hide {
+  display: none;
+}
+
+.ans-show {
+  display: block;
+}
+
+.que {
+  display: flex;
+  padding: 0px 8px;
+  justify-content: space-between;
+}
+
+@media screen and (min-width: 1000px) {
+  .faq-div {
+    font-size: 20px;
+  }
+}
