@@ -1,8 +1,8 @@
 import { useState } from "react";
 import "./Flip.css";
 import { IoSend } from "react-icons/io5";
-import dotenv from "dotenv";
-dotenv.config();
+import { defineConfig } from "vite";
+import viteEnv from "vite-env";
 
 const Flip = () => {
   const [messages, setMessages] = useState([]);
@@ -14,7 +14,7 @@ const Flip = () => {
       ...prevMessages,
       { text: inputValue, type: "user" },
     ]);
-    const URL = process.env.FLIPRAI_API_URL;
+    const URL = import.meta.env.VITE_FLIPRAI_API_URL;
     console.log(messages);
     try {
       // Send the user message to the backend
