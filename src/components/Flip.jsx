@@ -1,8 +1,6 @@
 import { useState } from "react";
 import "./Flip.css";
 import { IoSend } from "react-icons/io5";
-import { defineConfig } from "vite";
-import viteEnv from "vite-env";
 
 const Flip = () => {
   const [messages, setMessages] = useState([]);
