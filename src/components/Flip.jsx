@@ -1,11 +1,41 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
+import copy from "clipboard-copy";
 import "./Flip.css";
 import { IoSend } from "react-icons/io5";
-
+import { FaRegClipboard } from "react-icons/fa";
+import { FaCheck } from "react-icons/fa";
 const Flip = () => {
   const [messages, setMessages] = useState([]);
   const [inputValue, setInputValue] = useState("");
+
+  const CopyButton = ({ content }) => {
+    const [copied, setCopied] = useState(false);
+    const textToCopyRef = useRef(null);
+
+    const handleCopyClick = () => {
+      const textToCopy = textToCopyRef.current.innerText;
+      copy(textToCopy);
+      setCopied(true);
+      setTimeout(() => {
+        setCopied(false);
+      }, 2000);
+      // You can also provide visual feedback to the user, like displaying a tooltip or changing the button text
+    };
+
+    return (
+      <div className="message bot">
+        <div ref={textToCopyRef}>{content}</div>
+        {!copied ? (
+          <FaRegClipboard onClick={handleCopyClick} className="copy-icon" />
+        ) : (
+          <FaCheck className="copy-icon" />
+        )}
+      </div>
+    );
+  };
+
   const handleSendMessage = async () => {
+    setInputValue("");
     document.getElementsByClassName("loading")[0].style.display = "block";
     if (inputValue === "") return;
     // Update the state with the user's message
@@ -43,8 +73,6 @@ const Flip = () => {
     }
 
     document.getElementsByClassName("loading")[0].style.display = "none";
-    // Clear the input field
-    setInputValue("");
   };
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
@@ -60,14 +88,15 @@ const Flip = () => {
           {" "}
           Hi this is a sample respone from chatGPT
         </div>{" "}
-        {messages.map((message, index) => (
-          <div
-            key={index}
-            className={`message ${message.type === "user" ? "user" : "bot"}`}
-          >
-            {message.text}
-          </div>
-        ))}
+        {messages.map((message, index) =>
+          message.type === "user" ? (
+            <div key={index} className="message user">
+              {message.text}
+            </div>
+          ) : (
+            <CopyButton key={index} content={message.text} />
+          ),
+        )}
         <div className="loading">
           {" "}
           <p>Loading...</p>

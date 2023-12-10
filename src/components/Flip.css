@@ -73,6 +73,20 @@ h1 {
   display: none;
 }
 
+.copy-icon {
+  padding: 4px;
+  border-radius: 4px;
+  background-color: rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  font-size: 22px;
+  position: relative;
+  left: 90%;
+}
+
+.copy-icon:hover {
+  background-color: rgba(255, 255, 255, 0.4);
+}
+
 @media screen and (min-width: 1000px) {
   .flip {
     width: 90%;
