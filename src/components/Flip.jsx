@@ -70,6 +70,10 @@ const Flip = () => {
       ]);
     } catch (error) {
       console.error("Error:", error.message);
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        { text: "Server Not Working!", type: "error" },
+      ]);
     }
 
     document.getElementsByClassName("loading")[0].style.display = "none";
@@ -88,15 +92,24 @@ const Flip = () => {
           {" "}
           Hi this is a sample respone from chatGPT
         </div>{" "}
-        {messages.map((message, index) =>
-          message.type === "user" ? (
-            <div key={index} className="message user">
-              {message.text}
-            </div>
-          ) : (
-            <CopyButton key={index} content={message.text} />
-          ),
-        )}
+        {messages.map((message, index) => {
+          if (message.type === "user") {
+            return (
+              <div key={index} className="message user">
+                {message.text}
+              </div>
+            );
+          } else if (message.type === "bot") {
+            return <CopyButton key={index} content={message.text} />;
+          } else if (message.type === "error") {
+            return (
+              <div key={index} className="message error">
+                {message.text}
+              </div>
+            );
+          }
+          return null; // Add a default return value if needed
+        })}
         <div className="loading">
           {" "}
           <p>Loading...</p>
