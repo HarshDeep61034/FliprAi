@@ -6,6 +6,7 @@ const Flip = () => {
   const [messages, setMessages] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const handleSendMessage = async () => {
+    document.getElementsByClassName("loading")[0].style.display = "block";
     if (inputValue === "") return;
     // Update the state with the user's message
     setMessages((prevMessages) => [
@@ -13,10 +14,11 @@ const Flip = () => {
       { text: inputValue, type: "user" },
     ]);
     const URL = import.meta.env.VITE_FLIPRAI_API_URL;
+    console.log(URL);
     console.log(messages);
     try {
       // Send the user message to the backend
-      const response = await fetch(URL, {
+      const response = await fetch("http://localhost:6969/api", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -40,6 +42,7 @@ const Flip = () => {
       console.error("Error:", error.message);
     }
 
+    document.getElementsByClassName("loading")[0].style.display = "none";
     // Clear the input field
     setInputValue("");
   };
@@ -65,6 +68,10 @@ const Flip = () => {
             {message.text}
           </div>
         ))}
+        <div className="loading">
+          {" "}
+          <p>Loading...</p>
+        </div>
       </div>
       <div className="input-div">
         <input

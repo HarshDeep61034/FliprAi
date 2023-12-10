@@ -64,6 +64,15 @@ h1 {
   color: #fff;
 }
 
+.loading {
+  align-self: flex-start;
+  background-color: #2ecc71;
+  color: #fff;
+  padding: 8px;
+  border-radius: 5px;
+  display: none;
+}
+
 @media screen and (min-width: 1000px) {
   .flip {
     width: 90%;
