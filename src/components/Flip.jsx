@@ -48,7 +48,7 @@ const Flip = () => {
     console.log(messages);
     try {
       // Send the user message to the backend
-      const response = await fetch("http://localhost:6969/api", {
+      const response = await fetch(URL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
