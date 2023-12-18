@@ -6,7 +6,6 @@ import Faq from "./components/Faq";
 import data from "../faq.json";
 
 function App() {
-  const [faq, setFaq] = [false, false, false, false, false, false];
   const elements = data.map((item, index) => {
     return <Faq question={item.question} id={index} answer={item.answer} />;
   });
@@ -25,9 +24,8 @@ function App() {
           </p>
         </div>
         <div className="main-btns">
-          <button className="btn-pr">DETECT</button>
           <button onClick={scrollToSection} className="btn-sr">
-            Humanize_iT
+            Explore
           </button>
         </div>
       </div>

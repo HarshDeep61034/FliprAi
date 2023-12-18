@@ -1,51 +1,39 @@
 import { useState, useRef } from "react";
 import copy from "clipboard-copy";
 import "./Flip.css";
-import { IoSend } from "react-icons/io5";
 import { FaRegClipboard } from "react-icons/fa";
 import { FaCheck } from "react-icons/fa";
 const Flip = () => {
-  const [messages, setMessages] = useState([]);
+  const [response, setResponse] = useState();
   const [inputValue, setInputValue] = useState("");
+  const [mode, setMode] = useState("IRONMAN");
+  const textToCopyRef = useRef(null);
+  const handleModes = (event) => {
+    setMode(event.target.textContent);
+  };
 
-  const CopyButton = ({ content }) => {
-    const [copied, setCopied] = useState(false);
-    const textToCopyRef = useRef(null);
+  const handleCopyClick = () => {
+    const textToCopy = textToCopyRef.current.innerText;
+    copy(textToCopy);
+  };
 
-    const handleCopyClick = () => {
-      const textToCopy = textToCopyRef.current.innerText;
-      copy(textToCopy);
-      setCopied(true);
-      setTimeout(() => {
-        setCopied(false);
-      }, 2000);
-      // You can also provide visual feedback to the user, like displaying a tooltip or changing the button text
-    };
-
-    return (
-      <div className="message bot">
-        <div ref={textToCopyRef}>{content}</div>
-        {!copied ? (
-          <FaRegClipboard onClick={handleCopyClick} className="copy-icon" />
-        ) : (
-          <FaCheck className="copy-icon" />
-        )}
-      </div>
-    );
+  const sampleText = () => {
+    const textArea = document.getElementsByClassName("textarea")[0];
+    textArea.value = `Drinking water is of utmost importance for maintaining good health and overall well-being. Our bodies are composed mainly of water, and it plays a crucial role in various physiological functions. Staying hydrated helps regulate body temperature, aids in digestion, and facilitates the transport of nutrients and oxygen to cells. Moreover, water is essential for flushing out toxins and waste products through urination and sweating, ensuring the proper functioning of our kidneys and other vital organs.Additionally, drinking an adequate amount of water helps improve cognitive function and concentration, as even mild dehydration can lead to impaired mental performance. It also promotes healthier skin, as hydration keeps the skin moisturized and glowing.Furthermore, water plays a pivotal role in weight management by promoting a feeling of fullness, reducing overeating, and aiding in the metabolism of stored fats.Overall, staying hydrated is crucial for maintaining optimal health, energy levels, and overall vitality. It is essential to drink enough water throughout the day, and it's one of the simplest yet most effective ways to support a healthy lifestyle";
+of utmost importance for maintaining good health and overall well-being. Our bodies are composed mainly of water, and it plays a crucial role in various physiological functions. Staying hydrated helps regulate body temperature, aids in digestion, and facilitates the transport of nutrients and oxygen to cells. Moreover, water is essential for flushing out toxins and waste products through urination and sweating, ensuring the proper functioning of our kidneys and other vital organs.
+Additionally, drinking an adequate amount of water helps improve cognitive function and concentration, as even mild dehydration can lead to impaired mental performance. It also promotes healthier skin, as hydration keeps the skin moisturized and glowing.
+Furthermore, water plays a pivotal role in weight management by promoting a feeling of fullness, reducing overeating, and aiding in the metabolism of stored fats.
+Overall, staying hydrated is crucial for maintaining optimal health, energy levels, and overall vitality. It is essential to drink enough water throughout the day, and it's one of the simplest yet most effective ways to support a healthy lifestyle`;
+    setInputValue(textArea.value);
   };
 
   const handleSendMessage = async () => {
-    setInputValue("");
-    document.getElementsByClassName("loading")[0].style.display = "block";
+    document.getElementsByClassName("humanize")[0].innerHTML = "Loading...";
+
     if (inputValue === "") return;
     // Update the state with the user's message
-    setMessages((prevMessages) => [
-      ...prevMessages,
-      { text: inputValue, type: "user" },
-    ]);
     const URL = import.meta.env.VITE_FLIPRAI_API_URL;
-    console.log(URL);
-    console.log(messages);
+
     try {
       // Send the user message to the backend
       const response = await fetch(URL, {
@@ -59,74 +47,68 @@ const Flip = () => {
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
-
       // Parse the response JSON
       const data = await response.json();
-      console.log(data);
+
       // Update the state with the bot's response
-      setMessages((prevMessages) => [
-        ...prevMessages,
-        { text: data.response, type: "bot" },
-      ]);
+      setResponse(data);
     } catch (error) {
       console.error("Error:", error.message);
-      setMessages((prevMessages) => [
-        ...prevMessages,
-        { text: "Server Not Working!", type: "error" },
-      ]);
-    }
-
-    document.getElementsByClassName("loading")[0].style.display = "none";
-  };
-  const handleKeyDown = (event) => {
-    if (event.key === "Enter") {
-      event.preventDefault();
-      handleSendMessage();
+    } finally {
+      document.getElementsByClassName("humanize")[0].innerHTML = "Humanize";
     }
   };
   return (
-    <div className="flip" id="sectionId">
-      <h1>Use AI Rewriter for FREE</h1>
-      <div className="chat-div">
-        <div className="message bot">
-          {" "}
-          Hi this is a sample respone from chatGPT
-        </div>{" "}
-        {messages.map((message, index) => {
-          if (message.type === "user") {
-            return (
-              <div key={index} className="message user">
-                {message.text}
-              </div>
-            );
-          } else if (message.type === "bot") {
-            return <CopyButton key={index} content={message.text} />;
-          } else if (message.type === "error") {
-            return (
-              <div key={index} className="message error">
-                {message.text}
-              </div>
-            );
-          }
-          return null; // Add a default return value if needed
-        })}
-        <div className="loading">
-          {" "}
-          <p>Loading...</p>
+    <>
+      <div className="flip" id="sectionId">
+        <div className="modes">
+          <button
+            onClick={(e) => handleModes(e)}
+            className={mode === "IRONMAN" ? "btn-pr" : ""}
+          >
+            IRONMAN
+          </button>
+          <button
+            onClick={(e) => handleModes(e)}
+            className={mode === "HULK" ? "btn-pr" : ""}
+          >
+            HULK
+          </button>
+        </div>
+        <h1>Use AI Rewriter for FREE</h1>
+        <textarea
+          placeholder="Enter the Text you want to make unique & human written."
+          className="textarea"
+          value={inputValue}
+          onChange={(e) => {
+            setInputValue(e.target.value);
+          }}
+        />
+        <button className="btn-pr humanize" onClick={handleSendMessage}>
+          Humanize
+        </button>
+        <div className="btns-div">
+          <button className="btn-sr">Check</button>
+          <button className="btn-sr" onClick={sampleText}>
+            Use Sample Text
+          </button>
         </div>
       </div>
-      <div className="input-div">
-        <input
-          type="text"
-          name="user-text"
-          id="input-chat"
-          value={inputValue}
-          onKeyDown={handleKeyDown}
-          onChange={(e) => setInputValue(e.target.value)}
-        />
-        <IoSend className="send-icon" onClick={handleSendMessage} />
-      </div>
-    </div>
+      {response && (
+        <div className="response-div">
+          Your New Content:
+          <div className="copy-div">
+            <button onClick={handleCopyClick}>
+              <FaRegClipboard />
+            </button>
+            <button onClick={handleSendMessage}>Humanize Again</button>
+          </div>
+          <div className="response-content" ref={textToCopyRef}>
+            {response.response}
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 
