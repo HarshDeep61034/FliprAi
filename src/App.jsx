@@ -20,7 +20,7 @@ function App() {
         <div className="main-logo stroke">FliprAi</div>
         <div className="main-title">
           <p>
-            Enjoy Your Guilty Pleasure!! Bypassing All the AI DETECTIVES 🤫{" "}
+            Enjoy Your Guilty Pleasure! Bypassing All the AI DETECTIVES 🤫{" "}
           </p>
         </div>
         <div className="main-btns">
